@@ -15,6 +15,7 @@ const Search = ({ ...props }) => {
   const [startPositionText, setStartPositionText] = useState("");
   const [endPositionText, setEndPositionText] = useState("");
   const [departureTime, setDepartureTime] = useState("");
+  const [searching, setSearching] = useState(false);
   const startPosition = useSelector((state) => state.navigation.startPosition);
   const endPosition = useSelector((state) => state.navigation.endPosition);
 
@@ -59,11 +60,13 @@ const Search = ({ ...props }) => {
 
   async function searchRoute() {
     const { NavigationActions } = props;
+    setSearching(true);
     const result = await requestUncrowdedRoute(
       startPosition.id,
       endPosition.id,
       departureTime
     );
+    setSearching(false);
     NavigationActions.setResult(result);
   }
 
@@ -145,11 +148,14 @@ const Search = ({ ...props }) => {
           </AutoCompleteWrapper>
         </FormWrapper>
         <Button
-          className={(startPosition === "" || endPosition === "") && "disabled"}
-          disabled={startPosition === "" || endPosition === ""}
+          className={
+            (startPosition === "" || endPosition === "" || searching) &&
+            "disabled"
+          }
+          disabled={startPosition === "" || endPosition === "" || searching}
           onClick={searchRoute.bind(this)}
         >
-          {t("search")}
+          {searching ? t("searching") : t("search")}
         </Button>
       </InnerWrapper>
       <TimePicker onChange={onTimeChange.bind(this)} />

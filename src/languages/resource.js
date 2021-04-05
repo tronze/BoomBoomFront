@@ -13,6 +13,7 @@ const resources = {
       crowdedState: "Crowded State",
       departureTime: "Departure Time",
       now: "Current Time",
+      searching: "Searching",
     },
   },
   ko: {
@@ -26,6 +27,7 @@ const resources = {
       crowdedState: "현재 혼잡도",
       departureTime: "출발 시간",
       now: "현재 시각",
+      searching: "검색 중",
     },
   },
 };
